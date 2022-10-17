@@ -1,0 +1,29 @@
+{% load i18n widget_tweaks %}
+<div
+        class="modal fade"
+        id="confirmDeleteModal"
+        tabindex="-1"
+        aria-labelledby="confirmDeleteModalLabel"
+        aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger" id="confirmDeleteModalLabel">Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% trans 'This action is definitive! Are you sure about that?' %}
+      </div>
+      <div class="modal-footer">
+        <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal">{% trans 'Cancel' %}</button>
+        <button
+                type="button"
+                class="btn btn-danger"
+                id="confirmDeleteButtonModal">{% trans 'Delete' %}</button>
+      </div>
+    </div>
+  </div>
+</div>

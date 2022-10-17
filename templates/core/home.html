@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load i18n widget_tweaks %}
+
+{% block title %}
+    {% trans 'My Profile' %} - {{ block.super }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{% trans 'Tasks Day' %}</h1>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">{% trans 'Task' %}</th>
+                      <th scope="col">{% trans 'Description' %}</th>
+                      <th scope="col">{% trans 'End Date' %}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for task in tasks %}
+                    <tr>
+                      <td>{{ task.name }}</td>
+                      <td>{{ task.description }}</td>
+                      <td>{{ task.end_date | date }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

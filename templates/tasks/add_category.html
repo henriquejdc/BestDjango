@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load i18n widget_tweaks %}
+
+{% block title %}
+    {% trans 'Add Category' %} - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <h1>{% trans 'Add Category' %}</h1>
+        {% include 'partials/messages.html' %}
+        <div class="row">
+            <div class="col-md-12">
+                <form action="." method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="{{ form.name.id_for_label }}" class="form-label">
+                            {% trans 'Name' %}
+                        </label>
+                        {{ form.name|add_class:"form-control"|attr:"autofocus" }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.name.id_for_label }}" class="form-label">
+                            {% trans 'Description' %}
+                        </label>
+                        {{ form.description|add_class:"form-control"  }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}

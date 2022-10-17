@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load i18n widget_tweaks %}
+
+
+{% block title %}
+    {% trans 'My Profile' %} - {{ block.super }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            <h1>{% trans 'My Profile' %}</h1>
+
+            {% if profile %}
+                <div class="media">
+                    <img src="{{ profile.photo.url }}"
+                         class="align-self-start mr-3 rounded-circle"
+                         alt="{% trans 'Photo Profile' %}{{ user.get_full_name|default:user.username }}"
+                         width="100" height="100">
+                    <div class="media-body">
+                        <h5 class="mt-0">{{ profile.user.get_full_name }}</h5>
+                        <p>{% trans 'Cell Phone' %}: {{ profile.cell_phone }}</p>
+                        <p>{% trans 'Email' %}: {{ profile.user.email }}</p>
+                    </div>
+                </div>
+                <a href="{% url 'accounts:profile_user' user.username %}" class="btn btn-primary">
+                    {% trans 'Change Profile' %}
+                </a>
+            {% else %}
+                <h2>{% trans "You don't have an updated profile." %}</h2>
+                <a href="{% url 'accounts:profile_user' '' %}" class="btn btn-primary">
+                    {% trans 'Updated Profile' %}
+                </a>
+            {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

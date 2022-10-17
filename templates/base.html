@@ -1,0 +1,134 @@
+{% load static i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+{#        <link rel="stylesheet" href="/resources/demos/style.css">#}
+
+        <meta charset="UTF-8">
+        <title>{% block title %}BestDjango{% endblock title %}</title>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-xl">
+              <a class="navbar-brand" href="{% url 'core:home' %}">{% trans 'Best Django' %}</a>
+              <button
+                      class="navbar-toggler"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#navbarMenu"
+                      aria-controls="navbarMenu"
+                      aria-expanded="false"
+                      aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse" id="navbarMenu">
+                {% if user.is_authenticated %}
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"
+                       href="#" data-bs-toggle="dropdown"
+                       aria-expanded="false">Menu</a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="{% url 'tasks:add_category' %}">
+                          {% trans 'Add Category' %}</a></li>
+                      <li><a class="dropdown-item" href="{% url 'tasks:list_category' %}">
+                          {% trans 'List Categories' %}</a></li>
+                      <li><a class="dropdown-item" href="{% url 'tasks:add_task' %}">
+                          {% trans 'Add Task' %}</a></li>
+                      <li><a class="dropdown-item" href="{% url 'tasks:list_task' %}">
+                          {% trans 'List Tasks' %}</a></li>
+                      <li><a class="dropdown-item" href="{% url 'accounts:add_user' %}">
+                          {% trans 'Add User' %}</a></li>
+                    </ul>
+                  </li>
+                </ul>
+
+                <form class="form-inline my-2 my-md-0" action="{% url 'core:search_tasks' %}" style="margin-right:10px" autocomplete="off">
+                  <input class="form-control" name="query" type="text"
+                         placeholder="{% trans 'Search a word' %}" aria-label="{% trans 'Search' %}"
+                         style="margin-right:10px">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{% trans 'Search' %}</button>
+                </form>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                  <li class="nav-item">
+                      {% if user.profile.photo %}
+                      <img src="{{ user.profile.photo.url }}"
+                           alt="{% trans 'Photo Profile' %}{{ user.get_full_name|default:user.username }}"
+                           width="40" height="40"
+                           class="rounded-circle"
+                      >
+                      {% else %}
+                      <img src="{% static 'img/user.png' %}"
+                           alt="{% trans 'Photo Profile' %}{{ user.get_full_name|default:user.username }}"
+                           width="40" height="40"
+                           class="rounded-circle"
+                      >
+                      {% endif %}
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"
+                       href="#" data-bs-toggle="dropdown"
+                       aria-expanded="false">{{ user.get_full_name|default:user.username }}</a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="{% url 'accounts:list_profile_user' %}">
+                          {% trans 'Profile' %}</a></li>
+                      <li><a class="dropdown-item" href="{% url 'accounts:change_password_user' %}">
+                          {% trans 'Change Password' %}</a></li>
+                      <li><a class="dropdown-item" href="{% url 'accounts:change_user' user.username %}">
+                          {% trans 'Update User Informations' %}</a></li>
+                      <li><a class="dropdown-item" href="/admin">
+                          {% trans 'Admin' %}</a></li>
+                      <li><a class="dropdown-item" href="{% url 'accounts:logout_user' %}">
+                          {% trans 'Logout' %}</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                {% endif %}
+              </div>
+            </div>
+        </nav>
+
+        {% block body %}
+
+        {% endblock body %}
+
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'js/jquery-3.6.1.min.js' %}"></script>
+        <script src="{% static 'js/select2.min.js' %}"></script>
+        <script src="{% static 'js/jquery.mask.min.js' %}"></script>
+        <script src="{% static 'js/mask.js' %}"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <script>
+            $(document).on('click', '.confirm-delete', function () {
+                $('#confirmDeleteModal').attr('caller-id', $(this).attr('id'));
+            });
+            $(document).on('click', '#confirmDeleteButtonModal', function () {
+                const caller = $('#confirmDeleteButtonModal').closest('.modal').attr('caller-id');
+                window.location = $('#'.concat(caller)).attr('href');
+            });
+            $(function() {
+                $( "#id_end_date" ).datepicker(
+                    {
+                        dateFormat: "dd-mm-yy",
+                        {#dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],#}
+                        {#monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",#}
+                        {#    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],#}
+                    }
+                );
+            });
+            $(document).ready(function() {
+                $('#id_category').select2();
+            });
+        </script>
+    </body>
+</html>

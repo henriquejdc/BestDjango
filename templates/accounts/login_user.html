@@ -1,0 +1,44 @@
+{% load i18n static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>{% trans 'BestDjango Login' %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sign-in/">
+    <!-- Favicons -->
+    <meta name="theme-color" content="#712cf9">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+  </head>
+  <body class="text-center">
+
+    <main class="form-signin w-100 m-auto">
+      {% include 'partials/messages.html' %}
+      <form method="POST" action="." autocomplete="off">
+        {% csrf_token %}
+        <h1 class="h3 mb-3 fw-normal">{% trans 'Login' %}</h1>
+
+        <div class="form-floating">
+          <input type="text" class="form-control" id="username"
+                 name="username" placeholder="{% trans 'Username' %}" required autofocus>
+          <label for="username">{% trans 'Username' %}</label>
+        </div>
+        <div class="form-floating">
+          <input type="password" class="form-control" id="password" name="password"
+                 placeholder="{% trans 'Password' %}" required>
+          <label for="password">{% trans 'Password' %}</label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">{% trans 'Sign in' %}</button>
+        <a href="{% url 'accounts:add_user' %}"
+                class="w-100 btn btn-lg btn-info">{% trans 'Create User' %}</a>
+        <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+      </form>
+    </main>
+
+  </body>
+</html>

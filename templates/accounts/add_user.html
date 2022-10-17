@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load i18n widget_tweaks %}
+
+{% block title %}
+    {% trans 'New User' %} - {{ block.super }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>{% trans 'New User' %}</h1>
+                {% include 'partials/messages.html' %}
+                <form method="POST" action=".">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                    <label
+                            for="{{ form.first_name.id_for_label }}"
+                            class="form-label">{% trans 'First Name' %}</label>
+                    {{ form.first_name|add_class:"form-control"|attr:"autofocus" }}
+                  </div>
+                  <div class="mb-3">
+                    <label
+                            for="{{ form.last_name.id_for_label }}"
+                            class="form-label">{% trans 'Last Name' %}</label>
+                    {{ form.last_name|add_class:"form-control" }}
+                  </div>
+                  <div class="mb-3">
+                    <label
+                            for="{{ form.username.id_for_label }}"
+                            class="form-label">{% trans 'Username' %}</label>
+                    {{ form.username|add_class:"form-control" }}
+                  </div>
+                  <div class="mb-3">
+                    <label
+                            for="{{ form.email.id_for_label }}"
+                            class="form-label">{% trans 'Email' %}</label>
+                    {{ form.email|add_class:"form-control" }}
+                  </div>
+                  <div class="mb-3">
+                    <label
+                            for="{{ form.password.id_for_label }}"
+                            class="form-label">{% trans 'Password' %}</label>
+                    {{ form.password|add_class:"form-control"|attr:"type:password" }}
+                  </div>
+                  <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

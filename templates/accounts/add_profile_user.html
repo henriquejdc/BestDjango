@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load i18n widget_tweaks %}
+
+{% block title %}
+    {% trans 'Profile' %} - {{ block.super }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{% trans 'Profile' %}</h1>
+                {% include 'partials/messages.html' %}
+                <form method="POST" action="." enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                    <label
+                            for="{{ form.photo.id_for_label }}"
+                            class="form-label">{% trans 'Photo Profile' %}</label>
+                    {{ form.photo|add_class:"form-control-file" }}
+                  </div>
+                  <div class="mb-3">
+                    <label
+                            for="{{ form.cell_phone.id_for_label }}"
+                            class="form-label">{% trans 'Cell Phone' %}</label>
+                    {{ form.cell_phone|add_class:"form-control" }}
+                  </div>
+                  <div class="mb-3">
+                    <label
+                            for="{{ form.active_language.id_for_label }}"
+                            class="form-label">{% trans 'Active Language' %}</label>
+                    {{ form.active_language|add_class:"form-control" }}
+                  </div>
+                  <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
